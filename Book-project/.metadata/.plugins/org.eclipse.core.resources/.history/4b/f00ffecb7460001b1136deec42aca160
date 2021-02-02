@@ -1,0 +1,59 @@
+package com.stackroute.cucumber_demo;
+
+import java.net.MalformedURLException;
+import java.util.Map;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class signupStepDefinition {
+	private WebDriver driver;
+	  private Map<String, Object> vars;
+	  JavascriptExecutor js;
+	  @Before
+	  public void setUp() throws MalformedURLException {
+	    driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.chrome());
+	    js = (JavascriptExecutor) driver;
+	    vars = new HashMap<String, Object>();
+	  }
+	  @After
+	  public void tearDown() {
+	    driver.quit();
+	  }
+	@Given("user is on signin page")
+	public void user_is_on_signin_page() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Given("select signup  on dashboard")
+	public void select_signup_on_dashboard() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@When("user enters first name as {string} and last name as {string} and email as {string} and password as {string} and confirm password as {string}")
+	public void user_enters_first_name_as_and_last_name_as_and_email_as_and_password_as_and_confirm_password_as(String string, String string2, String string3, String string4, String string5) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@When("click on signup")
+	public void click_on_signup() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Then("user must be added")
+	public void user_must_be_added() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+}

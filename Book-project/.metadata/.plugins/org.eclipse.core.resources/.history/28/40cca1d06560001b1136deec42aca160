@@ -1,0 +1,30 @@
+Feature: 
+  In Order to manage portal user Admin should be able to add, view and delete users credential from the list
+
+  Scenario: Adding an User
+    Given user logged-in with valid credentials
+    When user navigates to the user management page
+    And enter the required details in the provided input fields
+    And click the add button
+    Then User should be added to the list
+
+  @smoketest
+  Scenario: Searching the User
+    Given user navigates to the login page
+    And user loged in with valid credentials
+    And navigates to users list page
+    When user enter the user name in the user input box
+    And click the search button
+    Then should display the user details
+
+  Scenario: Deleting an employee
+    Given user navigates to login page
+    And navigates to admin
+    And Search for employee
+    And select a record
+    Then click on delete
+
+  Scenario: Performance checkings
+    Given username and password
+    And navigate to performance
+    Then select employee

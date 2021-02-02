@@ -1,0 +1,45 @@
+#Author: your.email@your.domain.com
+#Keywords Summary :
+#Feature: List of scenarios.
+#Scenario: Business rule through list of steps with arguments.
+#Given: Some precondition step
+#When: Some key actions
+#Then: To observe outcomes or validation
+#And,But: To enumerate more Given,When,Then steps
+#Scenario Outline: List of steps for data-driven as an Examples and <placeholder>
+#Examples: Container for s table
+#Background: List of steps run before each of the scenarios
+#""" (Doc Strings)
+#| (Data Tables)
+#@ (Tags/Labels):To group Scenarios
+#<> (placeholder)
+#""
+## (Comments)
+#Sample Feature Definition Template
+Feature: signup to the application
+
+  Scenario: signup with valid details
+    Given user is on signin page
+    And click on signup
+    When user enters first name as "kk" and last name as "kk" and email as "dd@gmail.com" and password as "dd1234" and confirm password as "dd1234"
+    And click on signup
+    Then user must be added
+
+  Scenario Outline: checking for different values
+    Given user is on signin page
+    And click on signup
+    When user enters first name as <fname> and last name as <lname> and email as <email> and password as <pwd> and confirm password as <cpwd>
+    And click on signup
+    Then user must be added
+
+    Examples: 
+      | fname | lname | email         | pwd    | cpwd   |
+      | abc   | abc   | abc@gmail.com | abc123 | abc123 |
+      | xyz   | xyz   | xyz@gmail.com | xyz123 | xyz123 |
+
+  Scenario: signup with invalid details
+    Given user is on signin page
+    And click on signup
+    When user enters first name as "" and last name as "kk" and email as "dd@gmail.com" and password as "dd1234" and confirm password as "dd1234"
+    And click on signup
+    Then alert for invalid details

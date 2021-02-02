@@ -1,0 +1,199 @@
+package com.stackroute.cucumber_demo;
+
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class stepDefinition {
+	private WebDriver driver;
+	@Before
+	public void setup() {
+		System.out.println("Precondition");
+		System.out.println("setting up driver before Each tests");
+		WebDriverManager.chromedriver().setup();
+		driver=new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	}
+	@After
+	public void tearDown() {
+		driver.close();
+	}
+	@Given("user logged-in with valid credentials")
+	public void user_logged_in_with_valid_credentials() {
+		System.out.println("user enters username and password");
+		driver.get("https://opensource-demo.orangehrmlive.com/");
+		driver.findElement(By.id("txtUsername")).sendKeys("Admin");
+		driver.findElement(By.id("txtPassword")).sendKeys("admin123");
+		driver.findElement(By.id("btnLogin")).click();
+	}
+
+	@When("user navigates to the user management page")
+	public void user_navigates_to_the_user_management_page() {
+		driver.get("https://opensource-demo.orangehrmlive.com/index.php/dashboard");
+		driver.manage().window().setSize(new Dimension(1042, 510));
+		driver.findElement(By.cssSelector("#menu_admin_viewAdminModule > b")).click();
+	}
+
+	@And("enter the required details in the provided input fields")
+	public void enter_the_required_details_in_the_provided_input_fields() {
+		driver.findElement(By.id("searchSystemUser_userName")).click();
+		driver.findElement(By.id("searchSystemUser_userName")).sendKeys("sai");
+		driver.findElement(By.id("searchBtn")).click();
+		driver.findElement(By.cssSelector("td")).click();
+		driver.findElement(By.cssSelector("td")).click();
+		{
+			WebElement element = driver.findElement(By.cssSelector("td"));
+			Actions builder = new Actions(driver);
+			builder.doubleClick(element).perform();
+		}
+		driver.findElement(By.cssSelector("td")).click();
+		driver.findElement(By.cssSelector("td")).click();
+		{
+			WebElement element = driver.findElement(By.cssSelector("td"));
+			Actions builder = new Actions(driver);
+			builder.doubleClick(element).perform();
+		}
+	}
+
+	@And("click the add button")
+	public void click_the_add_button() {
+		driver.findElement(By.id("btnAdd")).click();
+		driver.findElement(By.id("systemUser_employeeName_empName")).click();
+		driver.findElement(By.id("systemUser_employeeName_empName")).sendKeys("p");
+		driver.findElement(By.cssSelector(".ac_over > strong")).click();
+		driver.findElement(By.id("systemUser_userName")).click();
+		driver.findElement(By.id("systemUser_userName")).sendKeys("reddy");
+		driver.findElement(By.id("systemUser_password")).click();
+		driver.findElement(By.id("systemUser_password")).sendKeys("Chandra@199");
+		driver.findElement(By.id("systemUser_confirmPassword")).sendKeys("Chandra@199");
+		driver.findElement(By.id("btnSave")).click();
+	}
+
+	@Then("User should be added to the list")
+	public void user_should_be_added_to_the_list() {
+		driver.get("https://opensource-demo.orangehrmlive.com/index.php/dashboard");
+		driver.manage().window().setSize(new Dimension(1042, 510));
+		driver.findElement(By.cssSelector("#menu_admin_viewAdminModule > b")).click();
+		driver.findElement(By.id("searchSystemUser_userName")).click();
+		driver.findElement(By.id("searchSystemUser_userName")).sendKeys("Reddy");
+		driver.findElement(By.id("searchBtn")).click();
+		driver.findElement(By.id("ohrmList_chkSelectRecord_50")).click();
+	}
+
+	@Given("user navigates to the login page")
+	public void user_navigates_to_the_login_page() throws InterruptedException{
+		// Write code here that turns the phrase above into concrete actions
+		driver.get("https://opensource-demo.orangehrmlive.com/");
+		Thread.sleep(3000);
+	}
+
+	@Given("user loged in with valid credentials")
+	public void user_loged_in_with_valid_credentials() throws InterruptedException {
+		// Write code here that turns the phrase above into concrete actions
+		driver.findElement(By.id("txtUsername")).sendKeys("Admin");
+		driver.findElement(By.id("txtPassword")).sendKeys("admin123");
+		driver.findElement(By.id("btnLogin")).click();
+		Thread.sleep(3000);
+
+	}
+
+	@And("navigates to users list page")
+	public void navigates_to_users_list_page() throws InterruptedException {
+		// Write code here that turns the phrase above into concrete actions
+		WebElement viewAdminLink=driver.findElement(By.id("menu_admin_viewAdminModule"));
+		WebElement userManagement=driver.findElement(By.id("menu_admin_UserManagement"));
+		WebElement viewSystemUsers=driver.findElement(By.id("menu_admin_viewSystemUsers"));
+		Actions actions=new Actions(driver);
+		actions.moveToElement(viewAdminLink).moveToElement(userManagement).moveToElement(viewSystemUsers).click().build().perform();
+		Thread.sleep(3000);
+
+	}
+
+	@When("user enter the user name in the user input box")
+	public void user_enter_the_user_name_in_the_user_input_box() {
+		// Write code here that turns the phrase above into concrete actions
+		driver.findElement(By.id("searchSystemUser_userName")).sendKeys("Admin");
+
+	}
+
+	@And("click the search button")
+	public void click_the_search_button() throws InterruptedException {
+		// Write code here that turns the phrase above into concrete actions
+		driver.findElement(By.id("searchBtn")).click();
+		Thread.sleep(3000);
+
+	}
+
+	@Then("should display the user details")
+	public void should_display_the_user_details() throws InterruptedException {
+		// Write code here that turns the phrase above into concrete actions
+		String username=driver.findElement(By.xpath("//*[@id=\"resultTable\"]/tbody/tr/td[2]/a")).getText();
+		Thread.sleep(3000);
+		Assert.assertEquals(username, "Admin");
+
+	}
+	@Given("user navigates to login page")
+	public void user_navigates_to_login_page() {
+		driver.get("https://opensource-demo.orangehrmlive.com/");
+		driver.findElement(By.id("txtUsername")).sendKeys("Admin");
+		driver.findElement(By.id("txtPassword")).sendKeys("admin123");
+		driver.findElement(By.id("btnLogin")).click();
+	}
+
+	@And("navigates to admin")
+	public void navigates_to_admin() {
+		driver.findElement(By.cssSelector("#menu_admin_viewAdminModule > b")).click();
+	}
+
+	@And("Search for employee")
+	public void search_for_employee() {
+		driver.findElement(By.id("searchSystemUser_employeeName_empName")).click();
+	    driver.findElement(By.id("searchSystemUser_employeeName_empName")).sendKeys("john");
+	    driver.findElement(By.cssSelector(".ac_even")).click();
+	    driver.findElement(By.id("searchBtn")).click();
+	}
+
+	@And("select a record")
+	public void select_a_record() {
+		driver.findElement(By.id("ohrmList_chkSelectRecord_2")).click();
+	}
+
+	@Then("click on delete")
+	public void click_on_delete() {
+		driver.findElement(By.id("btnDelete")).click();
+	    driver.findElement(By.id("dialogDeleteBtn")).click();
+	}
+	@Given("username and password")
+	public void username_and_password() {
+		driver.get("https://opensource-demo.orangehrmlive.com/");
+		driver.findElement(By.id("txtUsername")).sendKeys("Admin");
+		driver.findElement(By.id("txtPassword")).sendKeys("admin123");
+		driver.findElement(By.id("btnLogin")).click();
+	}
+
+	@Given("navigate to performance")
+	public void navigate_to_performance() {
+		 driver.findElement(By.cssSelector("#menu__Performance > b")).click();
+		    driver.findElement(By.id("menu_performance_viewEmployeePerformanceTrackerList")).click();
+	}
+
+	@Then("select employee")
+	public void select_employee() {
+		driver.findElement(By.linkText("Fiona Grace")).click();
+	}
+}

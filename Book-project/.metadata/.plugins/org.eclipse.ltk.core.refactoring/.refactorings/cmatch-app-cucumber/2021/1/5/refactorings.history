@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Runner.java&apos; to &apos;cucumber-Book-app/src/test/java/com.legato.runner&apos;&#x0A;- Original project: &apos;cmatch-app-cucumber&apos;&#x0A;- Destination element: &apos;cucumber-Book-app/src/test/java/com.legato.runner&apos;&#x0A;- Original element: &apos;com.legato.runner.Runner.java&apos;" description="Copy compilation unit" destination="=cucumber-Book-app/src\/test\/java=/optional=/true=/=/maven.pomderived=/true=/=/test=/true=/&lt;com.legato.runner" element1="/src\/test\/java=/test=/true=/=/optional=/true=/=/maven.pomderived=/true=/&lt;com.legato.runner{Runner.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1611748675110" units="1" version="1.0"/>
+</session>

@@ -1,0 +1,28 @@
+package com.stackroute.cucumber_demo;
+
+public class signinStepDefinition {
+	
+	@Given("user is on login page")
+	public void user_is_on_login_page() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Given("enter email as {string} and password as {string}")
+	public void enter_email_as_and_password_as(String string, String string2) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@When("click on sign in")
+	public void click_on_sign_in() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Then("user should be logged in")
+	public void user_should_be_logged_in() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+}

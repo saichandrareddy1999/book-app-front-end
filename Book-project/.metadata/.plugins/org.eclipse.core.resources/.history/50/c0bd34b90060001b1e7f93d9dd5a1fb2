@@ -1,0 +1,55 @@
+package com.stackroute.controller;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.stackroute.model.CMatch;
+import com.stackroute.service.CMatchService;
+
+@ExtendWith(MockitoExtension.class)
+public class CMatchControllerTest {
+
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@InjectMocks
+	private CMatchController cMatchController;
+	
+	@Mock
+	private CMatchService cMatchService;
+	
+	private static CMatch cMatch;
+	private static List<CMatch> cMatchList;
+	private static CMatch[] cMatches;
+	
+	static {
+		cMatch = new CMatch(11012, "India-A", "India-B","24-01-2021");
+		cMatches = new CMatch[] {
+				new CMatch(11013, "RCB","RR","24-01-2021"),
+				new CMatch(11014, "CSK","KKR","24-01-2021")
+			};
+		cMatchList = Arrays.asList(cMatches);
+	}
+	
+	@Test
+	public void givenGetRequestToMoviesEndpointShouldReturnAllMovies() throws Exception {
+		
+		mockMvc = MockMvcBuilders.standaloneSetup(cMatchController).build();
+		when(cMatchService.getAllCMatches()).thenReturn(cMatchList);
+		mockMvc.perform(get("/api/v1/favourite")).andDo(print());
+	}
+
+}

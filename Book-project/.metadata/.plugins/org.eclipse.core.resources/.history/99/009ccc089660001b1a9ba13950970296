@@ -1,0 +1,60 @@
+package com.stackroute.cucumber_demo;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class signinStepDefinition {
+	private WebDriver driver;
+	@Before
+	public void setup() {
+		System.out.println("Precondition");
+		System.out.println("setting up driver before Each tests");
+		WebDriverManager.chromedriver().setup();
+		driver=new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+	@After
+	public void tearDown() {
+		driver.close();
+	}
+	
+	@Given("user is on login page")
+	public void user_is_on_login_page() {
+	    // Write code here that turns the phrase above into concrete actions
+		driver.get("http://127.0.0.1:8080/");
+	    driver.manage().window().setSize(new Dimension(1280, 530));
+	}
+
+	@Given("enter email as {string} and password as {string}")
+	public void enter_email_as_and_password_as(String string, String string2) {
+	    // Write code here that turns the phrase above into concrete actions
+		driver.findElement(By.id("signinEmail")).click();
+	    driver.findElement(By.id("signinEmail")).sendKeys("aa@gmail.com");
+	    driver.findElement(By.id("signinPassword")).click();
+	    driver.findElement(By.id("signinPassword")).sendKeys("aa123");
+	}
+
+	@When("click on sign in")
+	public void click_on_sign_in() {
+	    // Write code here that turns the phrase above into concrete actions
+		driver.findElement(By.cssSelector(".w-100")).click();
+	}
+
+	@Then("user should be logged in")
+	public void user_should_be_logged_in() {
+	    // Write code here that turns the phrase above into concrete actions
+//		 assertThat(driver.switchTo().alert().getText(), is("Login Successfull"));
+		    driver.findElement(By.id("link_home")).click();
+	}
+}

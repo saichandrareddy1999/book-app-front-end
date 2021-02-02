@@ -1,0 +1,12 @@
+package com.stackroute.cucumber_demo;
+
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+
+@CucumberOptions(features="src/test/java/features",
+glue= {"com.stackroute.cucumber_demo"},
+monochrome=true,plugin = {"pretty","html:target/HtmlReports"},tags="regression")
+public class testRunner extends AbstractTestNGCucumberTests {
+
+}

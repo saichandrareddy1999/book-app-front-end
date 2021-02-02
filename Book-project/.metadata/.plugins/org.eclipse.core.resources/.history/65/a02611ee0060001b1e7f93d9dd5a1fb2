@@ -1,0 +1,15 @@
+package com.stackroute.suites;
+
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.runner.RunWith;
+
+import com.stackroute.controller.CMatchControllerTest;
+import com.stackroute.repository.CMatchRespositoryTest;
+import com.stackroute.service.CMatchServiceIntegrationTest;
+
+@RunWith(JUnitPlatform.class)
+@SelectClasses(value = {CMatchServiceIntegrationTest.class,CMatchRespositoryTest.class,CMatchControllerTest.class})
+public class CMatchAppIntegrationTestSuite {
+
+}

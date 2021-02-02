@@ -1,0 +1,12 @@
+package com.stackroute.cucumber_demo;
+
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+
+@CucumberOptions(features="src/test/java/com/stackroute/cucumber_demo",
+glue= {"com.stackroute.cucumber_demo"},
+monochrome=true,plugin = {"pretty","html:target/HtmlReports"},tags = "@smoketest")
+public class testRunner extends AbstractTestNGCucumberTests {
+
+}

@@ -1,0 +1,99 @@
+package com.stackroute.cucumber_demo;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertThat;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.Keys;
+import java.util.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+public class signupStepDefinition{
+  private WebDriver driver;
+  private Map<String, Object> vars;
+  JavascriptExecutor js;
+  @BeforeMethod
+public void setUp() throws MalformedURLException {
+    driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.chrome());
+    js = (JavascriptExecutor) driver;
+    vars = new HashMap<String, Object>();
+  }
+  @AfterMethod
+public void tearDown() {
+    driver.quit();
+  }
+@Given("user is on signin page")
+public void user_is_on_signin_page() {
+    // Write code here that turns the phrase above into concrete actions
+	driver.get("http://127.0.0.1:8080/");
+    driver.manage().window().setSize(new Dimension(1280, 530));
+}
+
+@Given("select signup on dashboard")
+public void select_signup_on_dashboard() {
+    // Write code here that turns the phrase above into concrete actions
+	driver.findElement(By.id("link_signup")).click();
+}
+
+@When("user enters first name as {string} and last name as {string} and email as {string} and password as {string} and confirm password as {string}")
+public void user_enters_first_name_as_and_last_name_as_and_email_as_and_password_as_and_confirm_password_as(String string, String string2, String string3, String string4, String string5) {
+    // Write code here that turns the phrase above into concrete actions
+	driver.findElement(By.id("inputFname")).click();
+    driver.findElement(By.id("inputFname")).sendKeys("aa");
+    driver.findElement(By.id("inputLname")).click();
+    driver.findElement(By.id("inputLname")).sendKeys("aa");
+    driver.findElement(By.id("inputEmail")).click();
+    driver.findElement(By.id("inputEmail")).sendKeys("aa@gmail.com");
+    driver.findElement(By.id("inputPassword")).sendKeys("aa123");
+    driver.findElement(By.id("inputPasswordConfirm")).sendKeys("aa123");
+}
+
+@When("click on signup")
+public void click_on_signup() {
+    // Write code here that turns the phrase above into concrete actions
+	driver.findElement(By.cssSelector(".w-100")).click();
+}
+
+@Then("user must be added")
+public void user_must_be_added() {
+    // Write code here that turns the phrase above into concrete actions
+	assertThat(driver.switchTo().alert().getText(), is("User added"));
+}
+
+//@When("user enters first name as abc and last name as abc and email as abc@gmail.com and password as abc123 and confirm password as abc123")
+//public void user_enters_first_name_as_abc_and_last_name_as_abc_and_email_as_abc_gmail_com_and_password_as_abc123_and_confirm_password_as_abc123() {
+//    // Write code here that turns the phrase above into concrete actions
+//    throw new io.cucumber.java.PendingException();
+//}
+//
+//@When("user enters first name as xyz and last name as xyz and email as xyz@gmail.com and password as xyz123 and confirm password as xyz123")
+//public void user_enters_first_name_as_xyz_and_last_name_as_xyz_and_email_as_xyz_gmail_com_and_password_as_xyz123_and_confirm_password_as_xyz123() {
+//    // Write code here that turns the phrase above into concrete actions
+//    throw new io.cucumber.java.PendingException();
+//}
+//
+//@Then("alert for invalid details")
+//public void alert_for_invalid_details() {
+//    // Write code here that turns the phrase above into concrete actions
+//    throw new io.cucumber.java.PendingException();
+//}
+}

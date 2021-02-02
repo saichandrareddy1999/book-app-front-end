@@ -1,0 +1,92 @@
+package com.stackroute.repository;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.stackroute.model.CMatch;
+
+
+
+@ExtendWith(MockitoExtension.class)
+public class CMatchRespositoryTest {
+	
+	@InjectMocks
+	private CMatchRepository cMatchRepo;
+
+	@Mock
+	private SessionFactory sessionFactory;
+
+	@Mock
+	private Session session;
+	
+	@Mock
+	private Query<CMatch> query;
+	
+	private static CMatch cMatch;
+	private static List<CMatch> cMatchList;
+	private static CMatch[] cMatches;
+	
+	static {
+		cMatch = new CMatch(11012, "India-A", "India-B","24-01-2021");
+		cMatches = new CMatch[] {
+				new CMatch(11013, "RCB","RR","24-01-2021"),
+				new CMatch(11014, "CSK","KKR","24-01-2021")
+			};
+		cMatchList = Arrays.asList(cMatches);
+	}
+	@BeforeEach
+	public void setup() {
+		
+		when(sessionFactory.getCurrentSession()).thenReturn(session);
+	}
+	
+	@Test
+	public void getSessionShouldReturnCurrentSessionObject() {
+		
+		assertEquals(cMatchRepo.getSession(), session);
+		verify(sessionFactory,times(1)).getCurrentSession();
+	}
+
+	@Test
+	public void givenValidIdThenFindByIdShouldInvokeFind() {
+
+		when(session.find(any(), any())).thenReturn(cMatch);
+
+		assertThat(cMatchRepo.findById(11012), is((cMatch)));
+		verify(session, times(1)).find(any(), any());
+	}
+	
+	@Test
+	public void findAllshouldReturnAllCMatches() {
+		
+		when(session.createQuery("from CMatch")).thenReturn(query);
+		when(query.list()).thenReturn(cMatchList);
+		List<CMatch> actual = cMatchRepo.findAllCMatch();
+		assertThat(actual, hasSize(2));
+		assertThat(actual, hasItems(cMatches[0],cMatches[1]));
+		verify(sessionFactory,times(1)).getCurrentSession();
+		verify(session,times(1)).createQuery("from CMatch");
+		verify(query,times(1)).list();
+	}
+
+}
+
